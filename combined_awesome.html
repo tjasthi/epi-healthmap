@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Heatmaps</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #floating-panel1 {
+        position: absolute;
+        bottom: 89px;
+        left: 7%;
+        width: 100px;
+
+        z-index: 5;
+        background-color: #111;
+        padding: 5px;
+        border: 1px solid black;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+      }
+      #floating-panel2 {
+        position: absolute;
+        bottom: 47px;
+        left: 7%;
+        width: 100px;
+
+        z-index: 5;
+        background-color: #111;
+        padding: 5px;
+        border: 1px solid black;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+      }
+      #floating-panel3 {
+        position: absolute;
+        bottom: 5px;
+        left: 7%;
+        width: 100px;
+
+        z-index: 5;
+        background-color: #111;
+        color: #111;
+        padding: 5px;
+        border: 1px solid black;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+      }
+      #grad1a {
+        position: absolute;
+        bottom: 89px;
+        left: 201px;
+        width: 15px;
+        height: 40px;
+
+        z-index: 5;
+        background-color: rgb(65, 255, 65);
+        color: #111;
+        border: 1px solid black;
+      }
+      #grad2a {
+        position: absolute;
+        bottom: 89px;
+        left: 216px;
+        width: 15px;
+        height: 40px;
+
+        z-index: 5;
+        background-color: rgb(100, 255, 65);
+        color: #111;
+        border: 1px solid black;
+      }
+      #grad3a {
+        position: absolute;
+        bottom: 89px;
+        left: 231px;
+        width: 15px;
+        height: 40px;
+
+        z-index: 5;
+        background-color: rgb(130, 245, 65);
+        color: #111;
+        border: 1px solid black;
+      }
+      #grad4a {
+        position: absolute;
+        bottom: 89px;
+        left: 246px;
+        width: 15px;
+        height: 40px;
+
+        z-index: 5;
+        background-color: rgb(200, 244, 65);
+        color: #111;
+        border: 1px solid black;
+      }
+      #grad5a {
+        position: absolute;
+        bottom: 89px;
+        left: 261px;
+        width: 15px;
+        height: 40px;
+
+        z-index: 5;
+        background-color: rgb(215, 244, 65);
+        color: #111;
+        border: 1px solid black;
+      }
+      #grad6a {
+        position: absolute;
+        bottom: 89px;
+        left: 275px;
+        width: 15px;
+        height: 40px;
+
+        z-index: 5;
+        background-color: rgb(238, 244, 65);
+        color: #111;
+        border: 1px solid black;
+      }
+      #grad7a {
+        position: absolute;
+        bottom: 89px;
+        left: 291px;
+        width: 15px;
+        height: 40px;
+
+        z-index: 5;
+        background-color: rgb(245, 200, 65);
+        color: #111;
+        border: 1px solid black;
+      }
+      #grad8a {
+        position: absolute;
+        bottom: 89px;
+        left: 306px;
+        width: 15px;
+        height: 40px;
+
+        z-index: 5;
+        background-color: rgb(245, 180, 65);
+        color: #111;
+        border: 1px solid black;
+      }
+      #grad9a {
+        position: absolute;
+        bottom: 89px;
+        left: 321px;
+        width: 15px;
+        height: 40px;
+
+        z-index: 5;
+        background-color: rgb(255, 100, 35);
+        color: #111;
+        border: 1px solid black;
+      }
+      #grad10a {
+        position: absolute;
+        bottom: 89px;
+        left: 336px;
+        width: 15px;
+        height: 40px;
+
+        z-index: 5;
+        background-color: rgb(255, 0, 0);
+        color: #111;
+        border: 1px solid black;
+      }
+      #grad1b {
+        position: absolute;
+        bottom: 47px;
+        left: 201px;
+        width: 15px;
+        height: 40px;
+
+        z-index: 5;
+        background-color: rgb(0, 255, 255);
+        color: #111;
+        border: 1px solid black;
+      }
+      #grad2b {
+        position: absolute;
+        bottom: 47px;
+        left: 216px;
+        width: 15px;
+        height: 40px;
+
+        z-index: 5;
+        background-color: rgb(0, 127, 255);
+        color: #111;
+        border: 1px solid black;
+      }
+      #grad3b {
+        position: absolute;
+        bottom: 47px;
+        left: 231px;
+        width: 15px;
+        height: 40px;
+
+        z-index: 5;
+        background-color: rgb(0, 63, 255);
+        color: #111;
+        border: 1px solid black;
+      }
+      #grad4b {
+        position: absolute;
+        bottom: 47px;
+        left: 246px;
+        width: 15px;
+        height: 40px;
+
+        z-index: 5;
+        background-color: rgb(0, 0, 255);
+        color: #111;
+        border: 1px solid black;
+      }
+      #grad5b {
+        position: absolute;
+        bottom: 47px;
+        left: 261px;
+        width: 15px;
+        height: 40px;
+
+        z-index: 5;
+        background-color: rgb(0, 0, 159);
+        color: #111;
+        border: 1px solid black;
+      }
+      #grad6b {
+        position: absolute;
+        bottom: 47px;
+        left: 275px;
+        width: 15px;
+        height: 40px;
+
+        z-index: 5;
+        background-color: rgb(0, 0, 127);
+        color: #111;
+        border: 1px solid black;
+      }
+      #grad7b {
+        position: absolute;
+        bottom: 47px;
+        left: 291px;
+        width: 15px;
+        height: 40px;
+
+        z-index: 5;
+        background-color: rgb(63, 0, 91);
+        color: #111;
+        border: 1px solid black;
+      }
+      #grad8b {
+        position: absolute;
+        bottom: 47px;
+        left: 306px;
+        width: 15px;
+        height: 40px;
+
+        z-index: 5;
+        background-color: rgb(127, 0, 63);
+        color: #111;
+        border: 1px solid black;
+      }
+      #grad9b {
+        position: absolute;
+        bottom: 47px;
+        left: 321px;
+        width: 15px;
+        height: 40px;
+
+        z-index: 5;
+        background-color: rgb(191, 0, 31);
+        color: #111;
+        border: 1px solid black;
+      }
+      #grad10b {
+        position: absolute;
+        bottom: 47px;
+        left: 336px;
+        width: 15px;
+        height: 40px;
+
+        z-index: 5;
+        background-color: rgb(255, 0, 0);
+        color: #111;
+        border: 1px solid black;
+      }
+      #grad1c {
+        position: absolute;
+        bottom: 5px;
+        left: 201px;
+        width: 15px;
+        height: 40px;
+
+        z-index: 5;
+        background-color: rgb(0, 0, 20);
+        color: #111;
+        border: 1px solid black;
+      }
+      #grad2c {
+        position: absolute;
+        bottom: 5px;
+        left: 216px;
+        width: 15px;
+        height: 40px;
+
+        z-index: 5;
+        background-color: rgb(25, 0, 40);
+        color: #111;
+        border: 1px solid black;
+      }
+      #grad3c {
+        position: absolute;
+        bottom: 5px;
+        left: 231px;
+        width: 15px;
+        height: 40px;
+
+        z-index: 5;
+        background-color: rgb(0, 0, 100);
+        color: #111;
+        border: 1px solid black;
+      }
+      #grad4c {
+        position: absolute;
+        bottom: 5px;
+        left: 246px;
+        width: 15px;
+        height: 40px;
+
+        z-index: 5;
+        background-color: rgb(0, 0, 120);
+        color: #111;
+        border: 1px solid black;
+      }
+      #grad5c {
+        position: absolute;
+        bottom: 5px;
+        left: 261px;
+        width: 15px;
+        height: 40px;
+
+        z-index: 5;
+        background-color: rgb(100, 0, 150);
+        color: #111;
+        border: 1px solid black;
+      }
+      #grad6c {
+        position: absolute;
+        bottom: 5px;
+        left: 275px;
+        width: 15px;
+        height: 40px;
+
+        z-index: 5;
+        background-color: rgb(150, 0, 100);
+        color: #111;
+        border: 1px solid black;
+      }
+      #grad7c {
+        position: absolute;
+        bottom: 5px;
+        left: 291px;
+        width: 15px;
+        height: 40px;
+
+        z-index: 5;
+        background-color: rgb(225, 0, 150);
+        color: #111;
+        border: 1px solid black;
+      }
+      #grad8c {
+        position: absolute;
+        bottom: 5px;
+        left: 306px;
+        width: 15px;
+        height: 40px;
+
+        z-index: 5;
+        background-color: rgb(255, 0, 100);
+        color: #111;
+        border: 1px solid black;
+      }
+      #grad9c {
+        position: absolute;
+        bottom: 5px;
+        left: 321px;
+        width: 15px;
+        height: 40px;
+
+        z-index: 5;
+        background-color: rgb(255, 0, 50);
+        color: #111;
+        border: 1px solid black;
+      }
+      #grad10c {
+        position: absolute;
+        bottom: 5px;
+        left: 336px;
+        width: 15px;
+        height: 40px;
+
+        z-index: 5;
+        background-color: rgb(255, 0, 0);
+        color: #111;
+        border: 1px solid black;
+      }
+
+      #pac-input {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 400px;
+      }
+
+      #pac-input:focus {
+        border-color: #4d90fe;
+      }
+    </style>
+  </head>
+
+  <body>
+    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+
+    <div id="grad1a">
+    </div>
+    <div id="grad2a">
+    </div>
+    <div id="grad3a">
+    </div>
+    <div id="grad4a">
+    </div>
+    <div id="grad5a">
+    </div>
+    <div id="grad6a">
+    </div>
+    <div id="grad7a">
+    </div>
+    <div id="grad8a">
+    </div>
+    <div id="grad9a">
+    </div>
+    <div id="grad10a">
+    </div>
+
+    <div id="grad1b">
+    </div>
+    <div id="grad2b">
+    </div>
+    <div id="grad3b">
+    </div>
+    <div id="grad4b">
+    </div>
+    <div id="grad5b">
+    </div>
+    <div id="grad6b">
+    </div>
+    <div id="grad7b">
+    </div>
+    <div id="grad8b">
+    </div>
+    <div id="grad9b">
+    </div>
+    <div id="grad10b">
+    </div>
+
+    <div id="grad1c">
+    </div>
+    <div id="grad2c">
+    </div>
+    <div id="grad3c">
+    </div>
+    <div id="grad4c">
+    </div>
+    <div id="grad5c">
+    </div>
+    <div id="grad6c">
+    </div>
+    <div id="grad7c">
+    </div>
+    <div id="grad8c">
+    </div>
+    <div id="grad9c">
+    </div>
+    <div id="grad10c">
+    </div>
+
+    <div id="floating-panel1">
+      <button onclick="toggleHeatmap1()">Lead Poisoning</button>
+<!--      <button onclick="changeRadius1()">Toggle Size</button> -->
+    </div>
+
+    <div id="floating-panel2">
+      <button onclick="toggleHeatmap2()">Food Scarcity</button>
+<!--      <button onclick="changeRadius2()">Toggle Size</button> -->
+    </div>
+
+    <div id="floating-panel3">
+      <button onclick="toggleHeatmap3()">Air Quality</button>
+<!--      <button onclick="changeRadius3()">Toggle Size</button> -->
+    </div>
+    <div id="map"></div>
+    <script>
+
+      // This example requires the Visualization library. Include the libraries=visualization
+      // parameter when you first load the API. For example:
+      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=visualization">
+
+      var map, heatmap;
+
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 9,
+          center: {lat: 39.1204, lng: -76.6122},
+          mapTypeId: 'satellite'
+        });
+
+        // Create the search box and link it to the UI element.
+        var input = document.getElementById('pac-input');
+        var searchBox = new google.maps.places.SearchBox(input);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+        var markers = [];
+        // Listen for the event fired when the user selects a prediction and retrieve
+        // more details for that place.
+        searchBox.addListener('places_changed', function() {
+          var places = searchBox.getPlaces();
+
+          if (places.length == 0) {
+            return;
+          }
+
+          // Clear out the old markers.
+          markers.forEach(function(marker) {
+            marker.setMap(null);
+          });
+          markers = [];
+
+          // For each place, get the icon, name and location.
+          var bounds = new google.maps.LatLngBounds();
+          places.forEach(function(place) {
+            if (!place.geometry) {
+              console.log("Returned place contains no geometry");
+              return;
+            }
+            var icon = {
+              url: place.icon,
+              size: new google.maps.Size(71, 71),
+              origin: new google.maps.Point(0, 0),
+              anchor: new google.maps.Point(17, 34),
+              scaledSize: new google.maps.Size(25, 25)
+            };
+
+            // Create a marker for each place.
+            markers.push(new google.maps.Marker({
+              map: map,
+              icon: icon,
+              title: place.name,
+              position: place.geometry.location
+            }));
+
+            if (place.geometry.viewport) {
+              // Only geocodes have viewport.
+              bounds.union(place.geometry.viewport);
+            } else {
+              bounds.extend(place.geometry.location);
+            }
+          });
+          map.fitBounds(bounds);
+        });
+
+        //Start planning the heatmap
+        heatmap1 = new google.maps.visualization.HeatmapLayer({
+          data: getPoints1(),
+          map: map,
+        });
+        heatmap2 = new google.maps.visualization.HeatmapLayer({
+          data: getPoints2(),
+          map: map,
+        });
+        heatmap3 = new google.maps.visualization.HeatmapLayer({
+          data: getPoints3(),
+          map: map
+        });
+
+        var gradient1 = [
+          'rgba(65, 255, 65, 0)',
+          'rgba(65, 255, 65, 1)',
+          'rgba(100, 255, 65, 1)',
+          'rgba(130, 245, 65, 1)',
+          'rgba(200, 244, 65, 1)',
+          'rgba(215, 244, 65, 1)',
+          'rgba(238, 244, 65, 1)',
+          'rgba(245, 200, 65, 1)',
+          'rgba(245, 180, 65, 1)',
+          'rgba(255, 100, 35, 1)',
+          'rgba(255, 0, 0, 1)'
+        ]
+        heatmap1.set("gradient", gradient1);
+
+        var gradient2 = [
+          'rgba(0, 255, 255, 0)',
+          'rgba(0, 255, 255, 1)',
+          'rgba(0, 127, 255, 1)',
+          'rgba(0, 63, 255, 1)',
+          'rgba(0, 0, 255, 1)',
+          'rgba(0, 0, 159, 1)',
+          'rgba(0, 0, 127, 1)',
+          'rgba(63, 0, 91, 1)',
+          'rgba(127, 0, 63, 1)',
+          'rgba(191, 0, 31, 1)',
+          'rgba(255, 0, 0, 1)'
+        ]
+        heatmap2.set("gradient", gradient2);
+
+        var gradient3 = [
+          'rgba(0, 0, 20, 0)',
+          'rgba(0, 0, 20, 1)',
+          'rgba(25, 0, 40, 1)',
+          'rgba(0, 0, 100, 1)',
+          'rgba(0, 0, 120, 1)',
+          'rgba(100, 0, 150, 1)',
+          'rgba(150, 0, 100, 1)',
+          'rgba(225, 0, 150, 1)',
+          'rgba(255, 0, 100, 1)',
+          'rgba(255, 0, 50, 1)',
+          'rgba(255, 0, 0, 1)'
+        ]
+        heatmap3.set("gradient", gradient3);
+        
+        dissipating = true
+        heatmap1.set('dissipating', dissipating);
+        heatmap2.set('dissipating', dissipating);
+        heatmap3.set('dissipating', dissipating);
+
+        rad = 50
+        heatmap1.set('radius', rad);
+        heatmap2.set('radius', rad);
+        heatmap3.set('radius', rad);
+      }
+
+      function toggleHeatmap1() {
+        heatmap1.setMap(heatmap1.getMap() ? null : map);
+      }
+
+      function toggleHeatmap2() {
+        heatmap2.setMap(heatmap2.getMap() ? null : map);
+      }
+
+      function toggleHeatmap3() {
+        heatmap3.setMap(heatmap3.getMap() ? null : map);
+      }
+
+      // function changeRadius1() {
+      //   if (heatmap1.get('radius') == 40) {
+      //     heatmap1.set('radius', 80)
+      //   } else if (heatmap1.get('radius') == 80) {
+      //     heatmap1.set('radius', 120)
+      //   } else if (heatmap1.get('radius') == 120) {
+      //     heatmap1.set('radius', 40)
+      //   }
+      // }
+
+      // function changeRadius2() {
+      //   if (heatmap2.get('radius') == 40) {
+      //     heatmap2.set('radius', 80)
+      //   } else if (heatmap2.get('radius') == 80) {
+      //     heatmap2.set('radius', 120)
+      //   } else if (heatmap2.get('radius') == 120) {
+      //     heatmap2.set('radius', 40)
+      //   }
+      // }
+
+      // function changeRadius3() {
+      //   if (heatmap3.get('radius') == 40) {
+      //     heatmap3.set('radius', 80)
+      //   } else if (heatmap3.get('radius') == 80) {
+      //     heatmap3.set('radius', 120)
+      //   } else if (heatmap3.get('radius') == 120) {
+      //     heatmap3.set('radius', 40)
+      //   }
+      // }
+
+      // Heatmap data: 500 Points
+      function getPoints1() { //lead
+        return [
+			new google.maps.LatLng(38.6967382,-76.3347838),
+			new google.maps.LatLng(38.1506658,-76.3463624),
+			new google.maps.LatLng(39.080029,-75.8185314),
+			new google.maps.LatLng(38.9799999,-76.94),
+			new google.maps.LatLng(38.973755,-77.1571443),
+			new google.maps.LatLng(39.15,-76.62),
+			new google.maps.LatLng(39.41,-76.64),
+			new google.maps.LatLng(38.41,-76.55),
+			new google.maps.LatLng(39.69,-77.13),
+			new google.maps.LatLng(39.41,-75.87),
+			new google.maps.LatLng(38.54,-77.21)]
+      }
+      function getPoints2() { //food scarcity
+        return [
+			new google.maps.LatLng(39.3056685,-76.6354952),
+			new google.maps.LatLng(39.2866135,-76.647047),
+			new google.maps.LatLng(39.3416271,-76.6816962),
+			new google.maps.LatLng(39.364133,-76.6123884),
+			new google.maps.LatLng(39.2713976,-76.5603828),
+			new google.maps.LatLng(39.33361,-76.532103),
+			new google.maps.LatLng(39.3179648,-76.5661622),
+			new google.maps.LatLng(39.2213396,-76.6123884),
+			new google.maps.LatLng(39.247707,-76.628337),
+			new google.maps.LatLng(39.3096984,-76.6701475)]
+      }
+	  function getPoints3() { //air quality
+        return [
+			new google.maps.LatLng(39.63,-75.88),
+			new google.maps.LatLng(39.51,-76.19),
+			new google.maps.LatLng(39.42,-76.31),
+			new google.maps.LatLng(44.13,-76.68),
+			new google.maps.LatLng(39.33,-76.53),
+			new google.maps.LatLng(39.3,-76.42),
+			new google.maps.LatLng(39.17,-76.59),
+			new google.maps.LatLng(38.93,-76.63),
+			new google.maps.LatLng(39.39,-76.99)];
+      }
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADdMpuzTLhyk2gx47h-dTabiMf33DSGn0&libraries=visualization,places&callback=initMap">
+    </script>
+  </body>
+</html>
