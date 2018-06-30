@@ -1,6 +1,6 @@
 # epi-healthmap
 This is a project for Medhacks 17. Hackathon located at John Hopkins University in Baltimore, Maryland.
-Team members Tony Zhou, Colin Yeung, 
+Team members Tony Zhou, Colin Yeung, Tapan Jasthi
 
 ## Inspiration
 Resource Mapping Healthcare Screening
